@@ -6,7 +6,7 @@
 |---|---|
 | `species-grouper` | ЛР1 — группировка персонажей из CSV по видам (`TreeMap<String, List<String>>`) |
 
-Сборка: Maven, Java 21.
+Сборка: Maven, Java 25.
 
 ## Запуск ЛР1
 
