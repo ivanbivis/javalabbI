@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS car (
+    id    SERIAL PRIMARY KEY,
+    model VARCHAR(255) NOT NULL UNIQUE,
+    year  INTEGER      NOT NULL
+);

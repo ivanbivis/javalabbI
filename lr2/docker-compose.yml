@@ -1,0 +1,25 @@
+
+name: car-repository
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: car-postgres
+    restart: unless-stopped
+    environment:
+
+      POSTGRES_DB: cars
+      POSTGRES_USER: car_admin
+      POSTGRES_PASSWORD: car_admin_password
+      # пользователь и схема приложения, создаются скриптом docker/init/01-create-app-user.sh
+      APP_DB_USER: car_user
+      APP_DB_PASSWORD: car_password
+      APP_DB_SCHEMA: car_schema
+    ports:
+      - "5432:5432"
+    volumes:
+      - car-pgdata:/var/lib/postgresql
+      - ./docker/init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  car-pgdata:
