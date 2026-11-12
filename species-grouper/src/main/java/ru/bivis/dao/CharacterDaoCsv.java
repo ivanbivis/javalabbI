@@ -2,11 +2,12 @@ package ru.bivis.dao;
 
 import ru.bivis.dto.CharacterDto;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,10 +17,10 @@ public class CharacterDaoCsv implements CharacterDao {
     private static final String NAME_COLUMN = "name";
     private static final String SPECIES_COLUMN = "species";
 
-    private final Path csvPath;
+    private final String resourceName;
 
-    public CharacterDaoCsv(Path csvPath) {
-        this.csvPath = csvPath;
+    public CharacterDaoCsv(String resourceName) {
+        this.resourceName = resourceName;
     }
 
     @Override
@@ -43,10 +44,14 @@ public class CharacterDaoCsv implements CharacterDao {
     }
 
     private List<String> readLines() {
-        try {
-            return Files.readAllLines(csvPath, StandardCharsets.UTF_8);
+        InputStream inputStream = CharacterDaoCsv.class.getClassLoader().getResourceAsStream(resourceName);
+        if (inputStream == null) {
+            throw new IllegalStateException("Не найден ресурс " + resourceName);
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            return reader.lines().toList();
         } catch (IOException e) {
-            throw new UncheckedIOException("Не удалось прочитать файл " + csvPath, e);
+            throw new UncheckedIOException("Не удалось прочитать ресурс " + resourceName, e);
         }
     }
 }

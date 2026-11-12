@@ -10,11 +10,11 @@
 
 ## Запуск ЛР1
 
-В IDEA — конфигурация `App`. Из консоли — из папки `species-grouper`:
+В IDEA — кнопка ▶ рядом с `main` в `App.java`. Из консоли — из папки `species-grouper`:
 
 ```
 mvn compile
-java -cp target/classes ru.bivis.App [входной.csv] [выходной.txt]
+java -cp target/classes ru.bivis.App [выходной.txt]
 ```
 
-По умолчанию читается `characters.csv`, результат пишется в `species.txt`.
+Входные данные — `src/main/resources/characters.csv`, читаются из classpath. Результат пишется в `species.txt` в текущей папке.

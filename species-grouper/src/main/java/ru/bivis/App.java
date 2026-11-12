@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class App {
-    private static final String DEFAULT_INPUT_PATH = "characters.csv";
+    private static final String INPUT_RESOURCE = "characters.csv";
     private static final String DEFAULT_OUTPUT_PATH = "species.txt";
 
     public static void main(String[] args) {
-        Path inputPath = Path.of(args.length > 0 ? args[0] : DEFAULT_INPUT_PATH);
-        Path outputPath = Path.of(args.length > 1 ? args[1] : DEFAULT_OUTPUT_PATH);
+        Path outputPath = Path.of(args.length > 0 ? args[0] : DEFAULT_OUTPUT_PATH);
 
-        CharacterDao characterDao = new CharacterDaoCsv(inputPath);
+        CharacterDao characterDao = new CharacterDaoCsv(INPUT_RESOURCE);
         SpeciesGroupingService groupingService = new SpeciesGroupingServiceImpl();
         SpeciesReportWriter reportWriter = new SpeciesReportWriterFile(outputPath);
 
