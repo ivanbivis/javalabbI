@@ -1,5 +1,8 @@
 package ru.bivis.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -11,6 +14,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class SpeciesReportWriterFile implements SpeciesReportWriter {
+    private static final Logger log = LoggerFactory.getLogger(SpeciesReportWriterFile.class);
+
     private static final String ARROW = " → ";
 
     private final Path outputPath;
@@ -26,7 +31,9 @@ public class SpeciesReportWriterFile implements SpeciesReportWriter {
                 writer.write(formatLine(entry.getKey(), entry.getValue()));
                 writer.newLine();
             }
+            log.info("Отчёт записан в {}, видов: {}", outputPath, namesBySpecies.size());
         } catch (IOException e) {
+            log.error("Не удалось записать файл {}", outputPath, e);
             throw new UncheckedIOException("Не удалось записать файл " + outputPath, e);
         }
     }
